@@ -1,7 +1,34 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+// import { ref } from 'vue'
 
-const count = ref(0)
+const nav = (index: number) => {
+    if (index == 0) {
+        return
+    }
+
+    let el = null
+    if (index == 1) {
+        el = document.querySelector('.info-2')
+    }
+    else if (index == 2) {
+        el = document.querySelector('.info-4')
+    }
+    else {
+        return
+    }
+    
+    // console.log(el)
+    const rect = el?.getBoundingClientRect()
+    // console.log(rect)
+    const y = rect?.top!!
+    // console.log(y)
+    window.scrollTo({
+        top: y - 30,
+        left: 0,
+        behavior: 'smooth'
+    })
+}
+
 </script>
 
 <template>
@@ -13,10 +40,9 @@ const count = ref(0)
   </div>
   <div class="nav-bar">
     <div class="nav">
-        <div class="nav-item">首页</div>
-        <div class="nav-item">新規募集 / 新生招募</div>
-        <div class="nav-item">無料体験申し込み / 预约免费体验课</div>
-        <div class="nav-item">レッスン見学受付中 / 预约课程旁听</div>
+        <div @click="nav(0)" class="nav-item">首页</div>
+        <div @click="nav(1)" class="nav-item">講師について</div>
+        <div @click="nav(2)" class="nav-item">体験レッスン予約</div>
     </div>
     
   </div>
@@ -27,13 +53,27 @@ const count = ref(0)
     <div class="align">
         <div class="table-like">
             <div class="table-head">レッスンについて / 课程介绍</div>
-            <div class="table-item">レベル / 级别：ゼロから～ / 教材相談可 / 零基础~ 教材非固定可商量</div>
-            <div class="table-item">マンツーマン　　２～4人　　　          6人～8人</div>
-            <div class="table-item">一对一                 小组课                      大课</div>
-            <div class="table-item">二胡楽団アンサンブル練習指導 / 二重奏・三重奏及び多人数楽団指導受付中 / 乐团练习课二重奏 三重奏及以上練習指導受付中 / 本会楽団団員募集中~二胡の上達に目指す～二胡のスキルを活かして楽しみに～</div>
+            <div class="table-item">ゼロから～（教材相談可）/ 歓迎初学者 教材非固定</div>
+            <table class="table-inner">
+                <tbody>
+                    <tr>
+                        <td>マンツーマン/１V１</td>
+                        <td>グループA  ２人 / 两人小组课</td>
+                        <td>グループB  ３人～６人/大组课 <br><span style="color: red">レベル近い　4人から開講</span></td>
+                    </tr>
+                    <tr>
+                        <td>７０００円</td>
+                        <td>４６００円 / 人</td>
+                        <td>２５００円 / 人</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="table-item">二胡楽団アンサンブル練習指導（二重奏・三重奏及び多人数楽団指導受付中）<br>
+本会楽団団員募集中~二胡の上達に目指す～二胡のスキルを活かして楽しみに～<br>
+申し込みはメールで～</div>
         </div>
         <div class="btn-apply">
-            <div class="t">申し込み</div>
+            <div class="t" @click="nav(2)">申し込み</div>
             <img src="../assets/arrow.png" alt="" class="i">
         </div>
     </div>
@@ -62,6 +102,25 @@ const count = ref(0)
         <img src="../assets/img_2.png" alt="">
         <img src="../assets/img_3.png" alt="">
     </div>
+  </div>
+  <div class="info-4">
+    <div class="inner">
+        無料体験レッスンやレッスン見学を希望するお客様は遠慮なくメールでご予約してください<br>
+        <br>
+        申し込み内容は<br>
+        <br>
+        お名前（漢字）：<br>
+        お名前（カタカナ）：<br>
+        連絡先：<br>
+        体験レッスン/見学（一つ選択してください）：<br>
+        予約したい時間帯：<br>
+        （少なくても3つの日付と時間帯を参考候補として書いてください）<br>
+        講師にコメント：<br>
+
+        メール： <a href="mailto:nikonikoerhu@ymail.ne.jp">nikonikoerhu@ymail.ne.jp</a><br>
+        みんなさんとの出会いを楽しみしております~<br>
+    </div>
+    
   </div>
   <div class="footer">
     <div class="g">
@@ -161,6 +220,22 @@ const count = ref(0)
                 // height: 2rem;
                 line-height: 2rem;
                 padding: 0.25rem 0.5rem;
+                text-align: center;
+            }
+            table.table-inner {
+                width: 100%;
+                border-collapse:collapse;
+                thead {
+
+                }
+                tbody {
+                    td {
+                        background-color: #e5e5e5;
+                        border: 1px solid #aaaaaa;
+                        padding: 0.25rem 0.5rem;
+                        text-align: center;
+                    }
+                }
             }
             .table-item {
                 // height: 2rem;
@@ -168,6 +243,7 @@ const count = ref(0)
                 background-color: #e5e5e5;
                 border: 1px solid #aaaaaa;
                 padding: 0.25rem 0.5rem;
+                text-align: center;
             }
         }
         .btn-apply {
@@ -183,6 +259,10 @@ const count = ref(0)
             border-radius: 1rem;
             display: flex;
             align-items: center;
+
+            user-select: none;
+            cursor: pointer;
+
             .t {
                 color: #fff;
             }
@@ -266,6 +346,7 @@ const count = ref(0)
             white-space: nowrap;
             line-height: 2rem;
             padding: 1rem;
+            
             // @media screen and (max-width: 980px) {
             //     width: 100%;
             // }
@@ -312,7 +393,31 @@ const count = ref(0)
     }
 }
 
+.info-4 {
+    
+    padding: 15px;
+    // white-space: pre-line;
+    // word-break: break-all;
+    // word-wrap: break-word;
 
+    max-width: 1320px;
+    @media screen and (max-width: 1200px) {
+        max-width: 980px;
+    }
+    @media screen and (max-width: 980px) {
+        padding: 1rem;
+    }
+    
+    margin: 2rem auto;
+
+    font-size: 1.25rem;
+
+    .inner {
+        border: 2rem solid #e1e4f3;
+        background-color: #fff;
+        padding: 2rem;
+    }
+}
 
 .footer {
     background-color: #a11f24;
@@ -325,6 +430,11 @@ const count = ref(0)
         padding: 1rem 0;
         color: #fff;
         line-height: 1.5rem;
+        
+        .g1 {
+            font-size: 1.25rem;
+            margin-bottom: 0.25rem;
+        }
     }
 }
 </style>
